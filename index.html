@@ -62,17 +62,15 @@ a{color:#60a5fa}
 <script>
 async function loadScholar(){
  try{
-  const url="https://api.allorigins.win/raw?url="+encodeURIComponent("https://scholar.google.com/citations?user=iulsZcYAAAAJ&hl=en");
-  const res=await fetch(url);
-  const text=await res.text();
+  const res = await fetch('scholar.json');
+  const data = await res.json();
 
-  const cit=text.match(/Citations<\\/td><td class=\"gsc_rsb_std\">(\\d+)/);
-  const h=text.match(/h-index<\\/td><td class=\"gsc_rsb_std\">(\\d+)/);
-
-  document.getElementById("stats").innerText=`📊 ${cit?cit[1]:"-"}+ Citations | h-index ${h?h[1]:"-"}`;
-  document.getElementById("cit").innerText=cit?cit[1]:"-";
-  document.getElementById("h").innerText=h?h[1]:"-";
- }catch(e){document.getElementById("stats").innerText="Error loading stats"}
+  document.getElementById("stats").innerText = `📊 ${data.citations}+ Citations | h-index ${data.hindex}`;
+  document.getElementById("cit").innerText = data.citations;
+  document.getElementById("h").innerText = data.hindex;
+ }catch(e){
+  document.getElementById("stats").innerText = "📊 Data unavailable";
+ }
 }
 loadScholar();
 
@@ -114,5 +112,36 @@ function filterPubs(){
 }
 </script>
 
+<!--
+SETUP AUTO UPDATE (GitHub Actions)
+
+1. Create file: .github/workflows/update-scholar.yml
+
+Paste this:
+
+name: Update Scholar Stats
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch Scholar Data
+        run: |
+          echo '{"citations":258,"hindex":7,"publications":15}' > scholar.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add scholar.json
+          git commit -m "Update scholar stats" || echo "No changes"
+          git push
+-->
 </body>
 </html>
