@@ -22,4 +22,3 @@ jobs:
           git add scholar.json
           git commit -m "Update scholar stats" || echo "No changes"
           git push
--->
