@@ -1,147 +1,637 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js" >
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. Oshnik Maurya | Research Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-:root {
-  --bg:#0f172a; --card:#111827; --text:#e5e7eb; --accent:#3b82f6;
-}
-body{margin:0;font-family:Inter;background:var(--bg);color:var(--text)}
-header{padding:60px;text-align:center;background:linear-gradient(135deg,#1e3a8a,#2563eb)}
-header img{width:120px;border-radius:50%}
-section{max-width:1100px;margin:30px auto;padding:25px;background:var(--card);border-radius:12px}
-h2{border-bottom:2px solid var(--accent)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{padding:20px;background:#1f2937;border-radius:10px}
-button{padding:8px 15px;margin:5px;border:none;border-radius:20px;background:var(--accent);color:white;cursor:pointer}
-input{padding:10px;width:100%;margin:10px 0;border-radius:8px;border:none}
-a{color:#60a5fa}
-</style>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dr. Oshnik Maurya</title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
 </head>
-<body>
 
-<header>
-<img src="profile.jpg">
-<h1>Dr. Oshnik Maurya</h1>
-<p id="stats">📊 Loading metrics...</p>
-</header>
 
-<section>
-<h2>📈 Citation Trend</h2>
-<canvas id="chart"></canvas>
-</section>
+<body id="top">
 
-<section>
-<h2>📚 Publications</h2>
-<input type="text" id="search" placeholder="Search publications..." onkeyup="filterPubs()">
-<div id="pubs">
-<div class="card">Ni-Based Chalcogenides – Small (2021)</div>
-<div class="card">TiO2 Nanotubes – Electrochimica Acta (2023)</div>
-<div class="card">NiSe Composite – ACS AMI (2024)</div>
-</div>
-</section>
+    
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 
-<section>
-<h2>⚡ Research Dashboard</h2>
-<div class="grid">
-<div class="card"><h3>Publications</h3><p>15+</p></div>
-<div class="card"><h3>Citations</h3><p id="cit">...</p></div>
-<div class="card"><h3>h-index</h3><p id="h">...</p></div>
-</div>
-</section>
 
-<section>
-<h2>🔗 Links</h2>
-<p><a href="https://scholar.google.com/citations?user=iulsZcYAAAAJ" target="_blank">Google Scholar</a></p>
-</section>
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="s-pagewrap">
 
-<script>
-async function loadScholar(){
- try{
-  const res = await fetch('scholar.json');
-  const data = await res.json();
 
-  document.getElementById("stats").innerText = `📊 ${data.citations}+ Citations | h-index ${data.hindex}`;
-  document.getElementById("cit").innerText = data.citations;
-  document.getElementById("h").innerText = data.hindex;
- }catch(e){
-  document.getElementById("stats").innerText = "📊 Data unavailable";
- }
-}
-loadScholar();
+        <!-- # site header 
+        ================================================== -->
+        <header class="s-header">
+            <div class="row s-header__inner">
 
-// Chart (fixed)
-window.onload = function() {
-  const ctx = document.getElementById('chart');
-  if (!ctx) return;
+                <div class="s-header__block">
+                    <div class="s-header__logo">
+                        <a class="logo" href="index.html">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                            </svg>
+                        </a>
+                    </div>
 
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['2021','2022','2023','2024','2025'],
-      datasets: [{
-        label: 'Citations',
-        data: [10,40,90,180,258],
-        fill: false,
-        tension: 0.3
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: true }
-      },
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
-};
+                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                </div> <!-- end s-header__block -->
 
-// Filter
-function filterPubs(){
- let input=document.getElementById('search').value.toLowerCase();
- let cards=document.querySelectorAll('#pubs .card');
- cards.forEach(c=>{
-  c.style.display=c.innerText.toLowerCase().includes(input)?'block':'none';
- });
-}
-</script>
+                <nav class="s-header__nav">    
+                    <ul class="s-header__menu-links">
+                        <li class="current"><a class="smoothscroll" href="#intro">Intro</a></li>
+                        <li><a class="smoothscroll" href="#about">About</a></li>
+                        <li><a class="smoothscroll" href="#works">Works</a></li>
+                        <li><a class="smoothscroll" href="#footer">Contact</a></li>
+                    </ul> <!-- s-header__menu-links -->    
+                </nav> <!-- end s-header__nav -->
 
-<!--
-SETUP AUTO UPDATE (GitHub Actions)
+            </div> <!-- end s-header__inner -->
+        </header> <!-- end s-header -->
 
-1. Create file: .github/workflows/update-scholar.yml
 
-Paste this:
+        <!-- # intro
+        ================================================== -->
+        <section id="intro" class="s-intro target-section">
 
-name: Update Scholar Stats
-on:
-  schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+            <div class="row s-intro__content width-sixteen-col">
+                <div class="column lg-12 s-intro__content-inner grid-block grid-16">
+                    
+                    <div class="s-intro__content-text">
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+                        <div class="s-intro__content-pretitle text-pretitle">Hello</div>
+                        <h1 class="s-intro__content-title">
+                        I'm Dr. Oshnik Maurya <br>
+                        a researcher <br>
+                        based out of Mumbai.
+                        </h1>                            
 
-      - name: Fetch Scholar Data
-        run: |
-          echo '{"citations":258,"hindex":7,"publications":15}' > scholar.json
+                        <div class="s-intro__content-btns">
+                            <a class="smoothscroll btn" href="#about">More About Me</a>
+                            <a class="smoothscroll btn btn--stroke" href="#footer">Get In Touch</a>
+                        </div> <!-- s-intro__content-btns -->   
 
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add scholar.json
-          git commit -m "Update scholar stats" || echo "No changes"
-          git push
--->
+                    </div> <!-- s-intro__content-text -->                     
+                    
+                </div> <!-- s-intro__content-inner -->  
+            </div> <!-- s-intro__content -->
+
+            <ul class="s-intro__social social-list">
+                <li>
+                    <a href="https://in.linkedin.com/in/dr-oshnik-maurya-aaa5a9b0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 119, 181, 1);">
+                                <path d="M22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003zM7.12 20.452H3.555V9h3.565v11.452zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm15.11 13.019h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"></path>
+                                </svg>
+                                <span class="u-screen-reader-text">LinkedIn</span>
+                            </a>
+                </li>
+                <li>
+                    <a href="https://x.com/oshnikbarc/">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:"><path d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z"></path></svg>
+                        <span class="u-screen-reader-text">Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/oshnikmaurya/">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:"><path d="M11.999,7.377c-2.554,0-4.623,2.07-4.623,4.623c0,2.554,2.069,4.624,4.623,4.624c2.552,0,4.623-2.07,4.623-4.624 C16.622,9.447,14.551,7.377,11.999,7.377L11.999,7.377z M11.999,15.004c-1.659,0-3.004-1.345-3.004-3.003 c0-1.659,1.345-3.003,3.004-3.003s3.002,1.344,3.002,3.003C15.001,13.659,13.658,15.004,11.999,15.004L11.999,15.004z"></path><circle cx="16.806" cy="7.207" r="1.078"></circle><path d="M20.533,6.111c-0.469-1.209-1.424-2.165-2.633-2.632c-0.699-0.263-1.438-0.404-2.186-0.42 c-0.963-0.042-1.268-0.054-3.71-0.054s-2.755,0-3.71,0.054C7.548,3.074,6.809,3.215,6.11,3.479C4.9,3.946,3.945,4.902,3.477,6.111 c-0.263,0.7-0.404,1.438-0.419,2.186c-0.043,0.962-0.056,1.267-0.056,3.71c0,2.442,0,2.753,0.056,3.71 c0.015,0.748,0.156,1.486,0.419,2.187c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45 c0.963,0.042,1.268,0.055,3.71,0.055s2.755,0,3.71-0.055c0.747-0.015,1.486-0.157,2.186-0.419c1.209-0.469,2.164-1.424,2.633-2.633 c0.263-0.7,0.404-1.438,0.419-2.186c0.043-0.962,0.056-1.267,0.056-3.71s0-2.753-0.056-3.71C20.941,7.57,20.801,6.819,20.533,6.111z M19.315,15.643c-0.007,0.576-0.111,1.147-0.311,1.688c-0.305,0.787-0.926,1.409-1.712,1.711c-0.535,0.199-1.099,0.303-1.67,0.311 c-0.95,0.044-1.218,0.055-3.654,0.055c-2.438,0-2.687,0-3.655-0.055c-0.569-0.007-1.135-0.112-1.669-0.311 c-0.789-0.301-1.414-0.923-1.719-1.711c-0.196-0.534-0.302-1.099-0.311-1.669c-0.043-0.95-0.053-1.218-0.053-3.654 c0-2.437,0-2.686,0.053-3.655c0.007-0.576,0.111-1.146,0.311-1.687c0.305-0.789,0.93-1.41,1.719-1.712 c0.534-0.198,1.1-0.303,1.669-0.311c0.951-0.043,1.218-0.055,3.655-0.055c2.437,0,2.687,0,3.654,0.055 c0.571,0.007,1.135,0.112,1.67,0.311c0.786,0.303,1.407,0.925,1.712,1.712c0.196,0.534,0.302,1.099,0.311,1.669 c0.043,0.951,0.054,1.218,0.054,3.655c0,2.436,0,2.698-0.043,3.654H19.315z"></path></svg>
+                        <span class="u-screen-reader-text">Instagram</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://orcid.org/0000-0001-6389-306X">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(166, 206, 57, 1);">
+                                    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.528 0 .948.43.948.945 0 .516-.42.949-.948.949-.519-.003-.945-.425-.945-.949 0-.522.422-.945.945-.945zM6.65 7.412h1.442v10.043H6.65V7.412zm3.562 0h3.898c3.712 0 5.344 2.656 5.344 5.027 0 2.579-2.015 5.024-5.324 5.024h-3.918V7.412zm1.441 1.305v7.445h2.297c3.274 0 4.024-2.484 4.024-3.723 0-2.015-1.285-3.722-4.098-3.722h-2.223z"></path>
+                                </svg>
+                                 <span class="u-screen-reader-text">ORCID iD</span>
+                            </a>
+                </li>
+                
+            </ul> <!-- end s-intro__social -->
+
+            <div class="s-intro__content-media">                               
+                <img src="images/intro-bg1.jpeg" srcset="images/intro-bg1.jpeg 1x, images/intro-bg1.jpeg 2x" alt="">
+            </div> <!-- s-intro__content-media -->                
+
+            <div class="s-intro__btn-download">
+                <a class="btn btn--stroke" href="#0">Get My CV</a>
+            </div> <!-- end s-intro__btn-download -->
+            
+            <div class="s-intro__scroll-down">
+                <a href="#about" class="smoothscroll">
+                    <div class="scroll-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path></svg>
+                    </div>
+                    <span class="scroll-text u-screen-reader-text">Scroll Down</span>
+                </a>
+            </div> <!-- s-intro__scroll-down -->
+
+        </section> <!-- end s-intro -->
+
+
+        <!-- # about
+        ================================================== -->
+        <section id="about" class="s-about target-section">
+
+            <div class="row s-about__content">
+                <div class="column xl-12">    
+                    
+                    <div class="section-header" data-num="01">
+                        <h2 class="text-display-title">About Me.</h2>
+                    </div> <!-- end section-header -->
+
+                    <p class="attention-getter">
+Ph.D. researcher and materials scientist with 6+ years of experience in nanomaterials, photoelectrocatalysis, solar water splitting,
+biomass upgradation, and next-gen energy storage (supercapacitors). Proven track record in full-cycle R&D — from material design
+and device fabrication to electrochemical characterization, data analytics, and scale-up assessment. Published in leading journals
+and funded by multiple international fellowships and conference grants. Skilled in cross-functional collaboration, project leadership,
+scientific communication, and mentoring early-career researchers. Also active at the interface of science policy, IP strategy, and
+deep-tech entrepreneurship, supported by a PG Diploma in IPR and programs such as DST-GDC INCUBATE and BRICS Youth
+Energy. Dedicated to advancing climate-aligned technologies and circular-economy solutions through research industry policy
+integration. Open to global collaborations, clean-energy innovation roles, and partnerships across advanced materials,
+sustainability, and science-driven technology development.                    </p>
+
+                    <div class="grid-list-items s-about__blocks">
+
+                        <div class="grid-list-items__item s-about__block">
+                            <h4 class="s-about__block-title">Research Experience</h4>
+                            <ul class="s-about__list">
+                                <li>
+                                    Senior Research Fellow
+                                    <span>ICT Mumbai</span>
+                                    <span>March 2023 - Feb 2026</span>
+                                </li>
+                                <li>
+                                    Juniour Research Fellow
+                                    <span>ICT Mumbai</span>
+                                    <span>March 2021 - Feb 2023</span>
+                                </li>
+                                <li>
+                                    Project Assistant
+                                    <span>ICT Mumbai</span>
+                                    <span>March 2019 - Feb 2021</span>
+                                </li>
+                                
+                            </ul>
+                        </div> <!--end s-about__block -->
+
+                        <div class="grid-list-items__item s-about__block">
+                            <h4 class="s-about__block-title">Education</h4>
+
+                            <ul class="s-about__list">
+                                <li>
+                                    <a href="#0">
+                                        Ph.D. in Physics
+                                        <span>March 2019 - Feb 2026</span>
+                                    </a>                                        
+                                </li>
+                                <li>
+                                    <a href="#0">
+                                        PG Diploma in IP Rights
+                                        <span>June 2023 - June 2024</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#0">
+                                        M.A. in Economics
+                                        <span>June 2019 - June 2024</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#0">
+                                        M.Sc. in Physics
+                                        <span>June 2016 - May 2018</span>
+                                    </a>
+                                </li><li>
+                                    <a href="#0">
+                                        B.Sc. in Physics
+                                        <span>June 2013 - May 2016</span>
+                                    </a>                                        
+                                </li>
+                            </ul>
+                        </div> <!--end s-about__block -->
+                        
+                        <div class="grid-list-items__item s-about__block">
+                            <h4 class="s-about__block-title">Skills</h4>
+
+                            <ul class="s-about__list">
+                                <li>
+                                    Electrochemical Analysis
+                                    <span>LSV, CV, EIS, GCD, Stability tests</span>
+                                </li>
+                                <li>
+                                    Material Optimization, Synthesis and Characterization
+                                </li>
+                                <li>
+                                    Design and Fabrication of electrode
+                                </li>
+                                <li>
+                                    Software skills
+                                    <span>XRD analysis, TEM analysis with Image J, Crystal structure design with VESTA</span>
+                                </li>
+                                <li>
+                                    Scientific Writing and Communication
+                                </li>
+                                <li>
+                                    Instrument Handling
+                                    <span>Electrochemical Workstation, X Ray Diffractometer and Raman/UV Spectrophotometer</span>
+                                </li>
+                            </ul>
+                        </div> <!--end s-about__block -->
+
+                    </div> <!-- grid-list-items -->
+
+                </div> <!--end column -->
+            </div> <!--end s-about__content -->
+            
+        </section> <!-- end s-about -->   
+
+
+
+        <!-- # works
+        ================================================== -->
+        <section id="works" class="s-works target-section">
+
+            <div class="row">
+                <div class="column xl-12">
+                    <div class="section-header" data-num="02">
+                        <h2 class="text-display-title">Publications.</h2>
+                    </div> <!-- end section-header -->
+                </div>
+            </div>
+
+            <div class="row folio-entries">
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/nano_resized.jpg" class="entry__link glightbox" data-glightbox="title: Small; description: .entry__desc-01">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/nano_resized.jpg" srcset="images/folio/gallery/nano_resized.jpg 1x, images/folio/gallery/nano_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Small</h4>
+                            <div class="entry__cat">Nickel based Chalcogenides as efficient electrocatalysts for oxygen evolution reaction: A review</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-01">
+                        <p>
+                        Nickel based Chalcogenides as efficient electrocatalysts for oxygen evolution reaction: A review
+                        <a href="https://doi.org/10.1002/smll.202100361">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/acs.jpg" class="entry__link glightbox" data-glightbox="title: ACS Applied Materials & Interfaces; description: .entry__desc-02">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/acs_resized.jpg" srcset="images/folio/gallery/acs.jpg 1x, images/folio/gallery/acs_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">ACS Applied Materials & Interfaces</h4>
+                            <div class="entry__cat">Extrinsic Pseudocapacitive NiSe/rGO/g-C3N4 Nanocomposite for High-Performance Hybrid Supercapacitors</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-02">
+                        <p>
+                        Extrinsic Pseudocapacitive NiSe/rGO/g-C3N4 Nanocomposite for High-Performance Hybrid Supercapacitors
+                        <a href="https://doi.org/10.1021/acsami.3c16010">Project Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/ea_resized.jpg" class="entry__link glightbox" data-glightbox="title: Electrochemica Acta; description: .entry__desc-03">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/ea_resized.jpg" srcset="images/folio/gallery/ea_resized.jpg 1x, images/folio/gallery/ea_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Electrochemica Acta </h4>
+                            <div class="entry__cat">Effective transformation of hydrothermally grown TiO2 nanorods to nanotube arrays for improved PEC hydrogen evolution.</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-03">
+                        <p>
+                        Effective transformation of hydrothermally grown TiO2 nanorods to nanotube arrays for improved PEC hydrogen evolution.
+                        <a href="https://doi.org/10.1016/j.electacta.2023.143391">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/aco_resized.jpg" class="entry__link glightbox" data-glightbox="title: Applied Catalysis O; description: .entry__desc-04">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/aco_resized.jpg" srcset="images/folio/gallery/aco_resized.jpg 1x, images/folio/gallery/aco_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Applied Catalysis O</h4>
+                            <div class="entry__cat">An efficient strategy for synthesis of CuS 3D yarn ball for wastewater treatment and Photoelectrocatalytic water splitting</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-04">
+                        <p>
+                        An efficient strategy for synthesis of CuS 3D yarn ball for wastewater treatment and Photoelectrocatalytic water splitting
+                        <a href="https://doi.org/10.1016/j.apcato.2025.207040">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/drm_resized.jpg" class="entry__link glightbox" data-glightbox="title: Diamond and Related Materials; description: .entry__desc-05">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/drm_resized.jpg" srcset="images/folio/gallery/drm_resized.jpg 1x, images/folio/gallery/drm_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Diamond and Related Materials</h4>
+                            <div class="entry__cat">Boron-doped g-C₃N₄ catalysts for solar-driven Hydrogen production: Experimental and DFT insights</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-05">
+                        <p>
+                        Boron-doped g-C₃N₄ catalysts for solar-driven Hydrogen production: Experimental and DFT insights
+                        <a href="https://doi.org/10.1016/j.diamond.2026.113371">Paper link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/ma_resized.jpg" class="entry__link glightbox" data-glightbox="title: Materials Advances; description: .entry__desc-06">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/ma_resized.jpg" srcset="images/folio/gallery/ma_resized.jpg 1x, images/folio/gallery/ma_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Materials Advances</h4>
+                            <div class="entry__cat">In situ growth of NiSe2 nanoparticles on g-C3N4 nanosheets for an efficient hydrogen evolution reaction</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-06">
+                        <p>
+                        In situ growth of NiSe2 nanoparticles on g-C3N4 nanosheets for an efficient hydrogen evolution reaction
+                        <a href="https://doi.org/10.1039/D3MA00948C">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry --> 
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/geirscher.jpg" class="entry__link glightbox" data-glightbox="title: ACS Energy Letters ; description: .entry__desc-02">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/geirscher_resized.jpg" srcset="images/folio/gallery/geirscher.jpg 1x, images/folio/gallery/geirscher_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">ACS Energy Letters</h4>
+                            <div class="entry__cat">Gerischer Electrochemistry Today</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-02">
+                        <p>
+                        Gerischer Electrochemistry Today
+                        <a href="https://doi.org/10.1021/acsenergylett.5c02966">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+                <div class="column entry">
+                    <a href="images/folio/gallery/advEnergy.jpg" class="entry__link glightbox" data-glightbox="title: Advanced Energy and Sustainability Research; description: .entry__desc-02">
+                        <div class="entry__thumb">
+                            <img src="images/folio/gallery/advEnergy_resized.jpg" srcset="images/folio/gallery/advEnergy_resized.jpg 1x, images/folio/gallery/advEnergy_resized@2x.jpg 2x" alt="">
+                        </div>
+                        <div class="entry__info">
+                            <h4 class="entry__title">Advanced Energy and Sustainability Research</h4>
+                            <div class="entry__cat">Interface Engineering of Nickel Selenide and Graphene Nanocomposite for Hybrid Supercapacitor</div>
+                        </div>
+                    </a>
+
+                    <div class="glightbox-desc entry__desc-02">
+                        <p>
+                        Interface Engineering of Nickel Selenide and Graphene Nanocomposite for Hybrid Supercapacitor
+                        <a href="https://doi.org/10.1002/aesr.202300013">Paper Link</a>.
+                        </p>
+                    </div>
+                </div> <!-- entry -->
+
+            </div> <!-- folio entries -->
+
+
+            <div class="row s-testimonials">
+                <div class="column xl-12">
+
+                    <h3 class="s-testimonials__header">.... and many more. Please go through my <a href="https://scholar.google.com/citations?user=iulsZcYAAAAJ&hl=en">Google Scholar </a>.</h3>
+                    
+    
+    
+                </div> <!-- end column -->
+            </div> <!-- end s-testimonials -->
+
+        </section> <!-- end s-works --> 
+
+
+        <!-- # numbers
+        ================================================== -->
+        <section id="numbers" class="s-numbers">
+
+            <div class="row counter-items">
+
+                <div class="column counter-items__item">
+                    <div class="num">
+                        15
+                        <span>+</span>
+                    </div>
+                    <h5>Publications</h5>
+                    <p>
+                    
+                    </p>
+                </div> <!-- end counter-items__item -->
+
+                <div class="column counter-items__item">
+                    <div class="num">
+                        285
+                        <span>+</span>
+                    </div>
+                    <h5>Citations</h5>
+                    <p>
+                    
+                    </p>
+                </div> <!-- end counter-items__item -->
+
+                
+
+                <div class="column counter-items__item">
+                    <div class="num">
+                        8
+                        <span></span>
+                    </div>
+                    <h5>h-index</h5>
+                    <p>
+                    
+                    </p>
+                </div> <!-- end counter-items__item -->
+
+                <div class="column counter-items__item">
+                    <div class="num">
+                        8
+                        <span></span>
+                    </div>
+                    <h5>i10-index</h5>
+                    <p>
+                    
+                    </p>
+                </div> <!-- end counter-items__item -->
+
+                
+
+            </div>  <!-- end counter-items -->
+
+        </section> <!-- end s-numbers -->
+
+
+        <!-- # footer 
+        ================================================== -->
+        <footer id="footer" class="s-footer target-section">
+
+            <div class="row">
+                <div class="column lg-12">
+                    <div class="section-header light-on-dark" data-num="03">
+                        <h2 class="text-display-title">Get In Touch.</h2>
+                    </div> <!-- end section-header -->
+                </div>
+            </div>
+
+            <div class="row s-footer__content">
+
+                <div class="column xl-6 md-12 s-footer__block s-footer__about">                    
+                    <p class="attention-getter">
+                    Have a question about my research, want to collaborate on a project, or just want to say hi? Feel free to reach out! I'm always open to connecting with fellow researchers, industry professionals, and anyone interested in the exciting world of materials science and clean energy. Whether you have a specific inquiry, want to discuss potential collaborations, or just want to chat about the latest developments in the field, I'm here to connect. Don't hesitate to drop me a message – I look forward to hearing from you! :)
+                    </p>               
+                </div> <!-- end section-footer__about -->
+
+                <div class="column xl-6 md-12 s-footer__block s-footer__site-links">
+                    <div class="row">
+                        <div class="column xl-4 lg-5 md-6 tab-12">
+                            <h5>Follow Me</h5>
+                            <ul class="link-list">
+                                <li><a href="https://in.linkedin.com/in/dr-oshnik-maurya-aaa5a9b0">LinkedIn</a></li>
+                                <li><a href="https://orcid.org/0000-0001-6389-306X">OrcidID</a></li>
+                                <li><a href="https://x.com/oshnikbarc/">Twitter</a></li>
+                                <li><a href="https://www.instagram.com/oshnikmaurya/">Instagram</a></li>
+                                
+                            </ul>
+                        </div>
+                        <div class="column xl-6 md-6 tab-12">
+                            <h5>Contact Me</h5>
+                            <ul class="link-list">
+                                <li><a href="mailto:oshnikbarc@gmail.com">oshnikbarc@gmail.com</a></li>
+                                <li><a href="tel:+917021962410">+91 7021962410</a></li>
+                            </ul> 
+                        </div>
+                    </div>                    
+                </div> <!-- end section-footer__site-links -->
+
+            </div> <!-- end section-footer__content -->
+
+
+            <div class="row s-footer__buttons">
+               
+                <div class="column xl-6 tab-12">
+                    <a href="mailto:oshnikbarc@gmail.com" class="btn btn--primary btn--large u-fullwidth">Message Me</a>
+                </div>
+          
+                <div class="column xl-6 tab-12">                    
+                    <a href="#0" class="btn btn--stroke btn--large u-fullwidth">Get My CV</a>
+                </div>
+            
+            </div> <!-- end section-footer__buttons -->              
+            
+            <div class="row s-footer__bottom">
+                
+                <div class="column xl-6 lg-12">
+                    <ul class="s-footer__social social-list">
+                        <li>
+                            <a href="https://in.linkedin.com/in/dr-oshnik-maurya-aaa5a9b0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 119, 181, 1);">
+                                <path d="M22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003zM7.12 20.452H3.555V9h3.565v11.452zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm15.11 13.019h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"></path>
+                                </svg>
+                                <span class="u-screen-reader-text">LinkedIn</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/oshnikbarc/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:"><path d="M19.633,7.997c0.013,0.175,0.013,0.349,0.013,0.523c0,5.325-4.053,11.461-11.46,11.461c-2.282,0-4.402-0.661-6.186-1.809 c0.324,0.037,0.636,0.05,0.973,0.05c1.883,0,3.616-0.636,5.001-1.721c-1.771-0.037-3.255-1.197-3.767-2.793 c0.249,0.037,0.499,0.062,0.761,0.062c0.361,0,0.724-0.05,1.061-0.137c-1.847-0.374-3.23-1.995-3.23-3.953v-0.05 c0.537,0.299,1.16,0.486,1.82,0.511C3.534,9.419,2.823,8.184,2.823,6.787c0-0.748,0.199-1.434,0.548-2.032 c1.983,2.443,4.964,4.04,8.306,4.215c-0.062-0.3-0.1-0.611-0.1-0.923c0-2.22,1.796-4.028,4.028-4.028 c1.16,0,2.207,0.486,2.943,1.272c0.91-0.175,1.782-0.512,2.556-0.973c-0.299,0.935-0.936,1.721-1.771,2.22 c0.811-0.088,1.597-0.312,2.319-0.624C21.104,6.712,20.419,7.423,19.633,7.997z"></path></svg>
+                                <span class="u-screen-reader-text">Twitter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/oshnikmaurya/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:"><path d="M11.999,7.377c-2.554,0-4.623,2.07-4.623,4.623c0,2.554,2.069,4.624,4.623,4.624c2.552,0,4.623-2.07,4.623-4.624 C16.622,9.447,14.551,7.377,11.999,7.377L11.999,7.377z M11.999,15.004c-1.659,0-3.004-1.345-3.004-3.003 c0-1.659,1.345-3.003,3.004-3.003s3.002,1.344,3.002,3.003C15.001,13.659,13.658,15.004,11.999,15.004L11.999,15.004z"></path><circle cx="16.806" cy="7.207" r="1.078"></circle><path d="M20.533,6.111c-0.469-1.209-1.424-2.165-2.633-2.632c-0.699-0.263-1.438-0.404-2.186-0.42 c-0.963-0.042-1.268-0.054-3.71-0.054s-2.755,0-3.71,0.054C7.548,3.074,6.809,3.215,6.11,3.479C4.9,3.946,3.945,4.902,3.477,6.111 c-0.263,0.7-0.404,1.438-0.419,2.186c-0.043,0.962-0.056,1.267-0.056,3.71c0,2.442,0,2.753,0.056,3.71 c0.015,0.748,0.156,1.486,0.419,2.187c0.469,1.208,1.424,2.164,2.634,2.632c0.696,0.272,1.435,0.426,2.185,0.45 c0.963,0.042,1.268,0.055,3.71,0.055s2.755,0,3.71-0.055c0.747-0.015,1.486-0.157,2.186-0.419c1.209-0.469,2.164-1.424,2.633-2.633 c0.263-0.7,0.404-1.438,0.419-2.186c0.043-0.962,0.056-1.267,0.056-3.71s0-2.753-0.056-3.71C20.941,7.57,20.801,6.819,20.533,6.111z M19.315,15.643c-0.007,0.576-0.111,1.147-0.311,1.688c-0.305,0.787-0.926,1.409-1.712,1.711c-0.535,0.199-1.099,0.303-1.67,0.311 c-0.95,0.044-1.218,0.055-3.654,0.055c-2.438,0-2.687,0-3.655-0.055c-0.569-0.007-1.135-0.112-1.669-0.311 c-0.789-0.301-1.414-0.923-1.719-1.711c-0.196-0.534-0.302-1.099-0.311-1.669c-0.043-0.95-0.053-1.218-0.053-3.654 c0-2.437,0-2.686,0.053-3.655c0.007-0.576,0.111-1.146,0.311-1.687c0.305-0.789,0.93-1.41,1.719-1.712 c0.534-0.198,1.1-0.303,1.669-0.311c0.951-0.043,1.218-0.055,3.655-0.055c2.437,0,2.687,0,3.654,0.055 c0.571,0.007,1.135,0.112,1.67,0.311c0.786,0.303,1.407,0.925,1.712,1.712c0.196,0.534,0.302,1.099,0.311,1.669 c0.043,0.951,0.054,1.218,0.054,3.655c0,2.436,0,2.698-0.043,3.654H19.315z"></path></svg>
+                                <span class="u-screen-reader-text">Instagram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://orcid.org/0000-0001-6389-306X">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(166, 206, 57, 1);">
+                                    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.528 0 .948.43.948.945 0 .516-.42.949-.948.949-.519-.003-.945-.425-.945-.949 0-.522.422-.945.945-.945zM6.65 7.412h1.442v10.043H6.65V7.412zm3.562 0h3.898c3.712 0 5.344 2.656 5.344 5.027 0 2.579-2.015 5.024-5.324 5.024h-3.918V7.412zm1.441 1.305v7.445h2.297c3.274 0 4.024-2.484 4.024-3.723 0-2.015-1.285-3.722-4.098-3.722h-2.223z"></path>
+                                </svg>
+                                 <span class="u-screen-reader-text">ORCID iD</span>
+                            </a>
+                        </li>
+                    </ul> 
+                </div> <!-- end section-footer__social -->
+
+                <div class="column xl-6 lg-12">
+                    <p class="ss-copyright">
+                        <span>Made with ❤️ by <a href="https://omnitrix123.github.io">Omnik Maurya</a></span> 
+                        <span>© Copyright Hudson   Design by <a href="https://styleshout.com/">StyleShout</a></span>
+                    </p>
+                </div>
+
+            </div> <!-- end section-footer__bottom -->          
+
+            <div class="ss-go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top">                 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"></path></svg>
+                </a>                                
+                <span>Back To Top</span>   
+            </div> <!-- end ss-go-top -->
+            
+        </footer> <!-- end s-footer -->
+
+    </div> <!-- end page-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
 </body>
 </html>
